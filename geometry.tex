@@ -1,0 +1,1400 @@
+% Includable chapter. Requires amsmath, amssymb, graphicx, caption,
+% tikz, hyperref, and float.
+\chapter{Measuring the world with geometry}
+\label{chap:geometry}
+\begin{center}\large Geometry as a way of reasoning\end{center}
+\begin{center}
+\begin{minipage}[t]{0.47\textwidth}
+\centering\vspace{0pt}
+\includegraphics[height=1.25in]{images/galileo.jpg}
+\captionof*{figure}{\small ``It is written in the language of mathematics, and its characters are triangles, circles, and other geometric figures''\\
+---Galileo Galilei, \href{https://old.maa.org/press/periodicals/convergence/quotations-in-context-galileo-2}{\emph{The Assayer}} (1623), excerpt; translated by Stillman Drake.}
+{\scriptsize Portrait by Justus Sustermans, 1636. Public domain.}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.47\textwidth}
+\centering\vspace{0pt}
+\includegraphics[height=1.25in]{images/poincare.jpg}
+\captionof*{figure}{\small ``it is by logic one demonstrates, by intuition one invents.''\\
+---Henri Poincar\'e, \href{https://www.gutenberg.org/files/39713/39713-h/39713-h.htm}{\emph{Science and Method}}, Book II, Chapter II; excerpt, translated by G.~B.~Halsted.}
+{\scriptsize Frontispiece of \emph{Last Thoughts}, 1913. Public-domain image (Wikimedia Commons).}
+\end{minipage}
+\end{center}
+
+How can we measure a building without climbing it? Locate ourselves from
+distances to landmarks? Find a shortest route that has to touch a boundary?
+Choose a shape that uses a fixed amount of material efficiently?
+These questions ask us to do more than remember a formula. We must decide
+what to represent, what to measure, and why the resulting construction works.
+
+In the preceding chapters, a proof guided the construction of an algorithm.
+Geometry lets us follow the same approach with diagrams. A figure suggests
+relationships; a proof explains which of them must hold. We will use
+similar triangles, lengths, areas, and volumes that are already familiar,
+and turn them into tools for solving practical problems.
+
+\section{From a place to a geometric model}
+\label{sec:geo-model}
+A building has windows, ledges, and an irregular roof. For a shadow
+measurement, we may represent it by a vertical segment of unknown length.
+We represent level ground by a straight line and sunlight by parallel
+rays. These choices form a \emph{model}: we retain the features relevant
+to the question and set others aside.
+
+A conclusion can be correct within a model and still give a poor answer
+about the place being measured. Perhaps the ground slopes, the building
+leans, or we measure the shadow of the wrong part of the roof. We therefore
+keep two questions separate: does the reasoning follow from the assumptions,
+and are those assumptions suitable here?
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[scale=.85]
+\draw[fill=gray!15] (0,0) rectangle (1.5,2.8);
+\foreach \x in {.3,.9}{\foreach \y in {.5,1.3,2.1}{\draw[fill=white] (\x,\y) rectangle +(0.3,.4);}}
+\draw[thick] (-.4,0)--(4.8,0);\draw[fill=gray!30] (1.5,0)--(4.5,0)--(1.5,.15)--cycle;
+\node at (2,-.95) {a building and its shadow};
+\draw[->,thick] (5,1.3)--(6.1,1.3);
+\draw[thick] (6.6,0)--(10.8,0);\draw[very thick,blue!65!black] (6.8,0)--(6.8,2.8);
+\draw[orange!80!black,thick] (6.8,2.8)--(10.5,0);
+\draw (6.8,.22)--(7.02,.22)--(7.02,0);
+\node[left] at (6.8,1.4) {$H$};\node[below] at (8.65,0) {$L$};
+\node at (8.7,-.95) {a right triangle};
+\end{tikzpicture}
+\caption{A model makes selected relationships explicit. The right angle is an assumption to check, not a consequence of the drawing.}
+\end{figure}
+
+Throughout this chapter we use plane Euclidean geometry for local maps,
+and straight-line distance unless another notion of distance is specified.
+Diagrams explain the construction; their drawn sizes are not measurements.
+
+\section{Measuring what we cannot reach}
+\label{sec:geo-measure}
+\subsection{A building and a stick}
+\paragraph{The problem.}
+Determine the height $H$ of a vertical building from a stick of known
+height $h>0$ and simultaneous shadow lengths $s>0$ (stick) and $L>0$
+(building). Assume level ground, vertical objects, and parallel sunlight.
+
+Place a vertical stick
+of known height $h$ on the same level ground, and measure its shadow $s$
+and the building's shadow $L$ at the same time. Assume the tips of both
+shadows can be identified and the Sun is above the horizon, so $s>0$.
+
+The two right triangles have the same angle with the sunlight, whose rays
+we treat as parallel. They are similar, and hence
+\[
+\frac{H}{L}=\frac{h}{s},\qquad H=\frac{hL}{s}.
+\]
+The inaccessible length has been replaced by three accessible ones.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[scale=.9]
+\draw[thick] (-.5,0)--(11.4,0);
+\draw[very thick,blue!65!black] (0,0)--(0,3);
+\draw[orange!80!black,thick] (0,3)--(4.5,0);
+\draw[very thick,blue!65!black] (7,0)--(7,1.5);
+\draw[orange!80!black,thick] (7,1.5)--(9.25,0);
+\draw (0,.25)--(.25,.25)--(.25,0);\draw (7,.25)--(7.25,.25)--(7.25,0);
+\node[left] at (0,1.5) {$H$};\node[left] at (7,.75) {$h$};
+\draw[<->] (0,-.5)--node[fill=white]{$L$}(4.5,-.5);
+\draw[<->] (7,-.5)--node[fill=white]{$s$}(9.25,-.5);
+\node at (2,3.35) {building};\node at (8.2,2) {stick};
+\end{tikzpicture}
+\caption{Equal sunlight angles and vertical objects give similar triangles.}
+\label{fig:geo-shadows}
+\end{figure}
+
+\paragraph{A measurement procedure.}
+First check verticality and the ground. Measure $h$, then measure $s$ and
+$L$ as nearly simultaneously as possible. Calculate $hL/s$ and record the
+units and the conditions under which the measurement was made.
+For $h=1.5$ metres, $s=2$ metres, and $L=18$ metres, the estimate is
+$H=13.5$ metres. The numerical answer alone does not tell us how accurate
+it is.
+
+\subsection{How much should we trust the answer?}
+Suppose $h=1.5$ metres is treated as exact, but the shadow measurements
+lie in the intervals
+\[
+17.8\leq L\leq18.2,\qquad1.9\leq s\leq2.1.
+\]
+\paragraph{The problem.}
+Under the same shadow model, find lower and upper bounds for $H$ that
+contain every value consistent with these measurement intervals. All
+lengths in the displayed intervals are in metres.
+
+Increasing $L$ increases $H$, while increasing the positive denominator
+$s$ decreases it. Consequently,
+\[
+\frac{1.5(17.8)}{2.1}\leq H\leq\frac{1.5(18.2)}{1.9},
+\qquad 12.71\ldots\leq H\leq14.36\ldots.
+\]
+A conservative rounded report is $12.7\leq H\leq14.4$ metres.
+This interval accounts for the stated measurement uncertainty within the
+model; it does not account for a leaning stick or sloping ground.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[x=2.2cm,y=1cm]
+\draw[->] (12.3,0)--(14.8,0) node[right]{metres};
+\foreach \x in {12.5,13,13.5,14,14.5}{\draw (\x,.07)--(\x,-.07) node[below]{$\x$};}
+\draw[very thick,blue!65!black] (12.714,.45)--(14.368,.45);
+\draw[blue!65!black] (12.714,.3)--(12.714,.6) (14.368,.3)--(14.368,.6);
+\fill (13.5,.45) circle (1.8pt);\node[above] at (13.5,.7) {estimate and possible range};
+\end{tikzpicture}
+\caption{An interval often communicates a measurement more honestly than extra decimal places.}
+\end{figure}
+
+If a shadow is very short, a small absolute error can be a large fraction
+of its length. A longer shadow may help, but a low Sun can make its tip
+harder to identify. A useful procedure must consider both the geometry
+and the quality of the observations.
+
+\subsection{Can a photograph replace a shadow?}
+\label{sec:geo-camera}
+A shadow turned an inaccessible height into a ratio of accessible lengths.
+Could a smartphone photograph do the same job? A photograph also records
+rays of light, but its geometry is different. Sunlight was modelled by
+parallel rays; a camera is modelled by rays passing through a single point,
+the \emph{camera centre}. Similar triangles will again do the work.
+
+\paragraph{A dark room, a small hole, and a picture.}
+The point-camera model has a physical counterpart: a dark box with a small
+hole in one side and a screen opposite it. Light from the top of an object
+passes through the hole and reaches the lower part of the screen; light
+from the bottom reaches the upper part. The image is inverted. A darkened
+room can do the same thing, which explains the name \emph{camera obscura},
+Latin for ``dark room''. A pinhole camera uses this principle without a
+lens. The image can be viewed on a screen; recording it permanently
+requires a light-sensitive surface.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[scale=.8]
+\fill[gray!8] (0,-2) rectangle (4,2);
+\draw[thick] (0,.12)--(0,2)--(4,2)--(4,-2)--(0,-2)--(0,-.12);
+\draw[very thick,blue!65!black,->] (-4,-1.5)--(-4,1.5);
+\draw[orange!85!black,thick] (-4,1.5)--(4,-1.5);
+\draw[orange!85!black,thick] (-4,-1.5)--(4,1.5);
+\draw[very thick,blue!65!black,->] (4,1.5)--(4,-1.5);
+\fill (0,0) circle(1.5pt);
+\node[above] at (-4,1.65) {object};
+\node[above] at (2,2) {dark box};
+\node[below,align=center] at (0,-2.15) {small opening\\at $C$};
+\node[right,align=left] at (4.3,0) {screen:\\inverted image};
+\end{tikzpicture}
+\caption{The camera obscura principle. Rays cross at the small opening;
+the screen is behind it, on the opposite side from the object. The arrows
+represent the object and its inverted image, not the direction of light. The ideal pinhole cannot physically exist. Modern cameras are approximations of the ideal model.}
+\label{fig:geo-pinhole}
+\end{figure}
+
+Pinhole-image effects were known in antiquity. In the eleventh century,
+Ibn al-Haytham (Alhazen, c.~965--c.~1040) investigated light and vision
+through mathematical reasoning and experiments, including dark-room
+arrangements. His work helped establish how straight-travelling light
+produces images and how vision depends on light entering the eye. \footnote{For Ibn al-Haytham's experimental approach, see
+\href{https://www.unesco.org/en/articles/ibn-al-haythams-scientific-method}{UNESCO, ``Ibn al-Haytham's scientific method''}, and
+\href{https://www.ibnalhaytham.com/discover/who-was-ibn-al-haytham/}{``Who was Ibn al-Haytham?''}.
+The \href{https://www.cameramuseum.ch/en/discover/permanent-exhibition/the-origins-of-photography/the-camera-obscura/}{Swiss Camera Museum}
+discusses the camera obscura's ancient antecedents and later use as a drawing instrument.}
+
+\begin{figure}[htbp]\centering
+\begin{minipage}[t]{.46\textwidth}\centering\vspace{0pt}
+\includegraphics[height=1.65in]{images/ibn-al-haytham.jpg}\par\smallskip
+\small Ibn al-Haytham, as imagined in the frontispiece of Hevelius's
+\emph{Selenographia} (1647). A later representation, not a contemporary
+likeness. \href{https://commons.wikimedia.org/wiki/File:Alhazen_(122459248).jpg}{Polona / Wikimedia Commons; public domain.}
+\end{minipage}\hfill
+\begin{minipage}[t]{.46\textwidth}\centering\vspace{0pt}
+\includegraphics[height=1.65in]{images/leonardo-melzi.jpg}\par\smallskip
+\small Leonardo da Vinci (1452--1519). Portrait attributed to his pupil
+Francesco Melzi, Royal Collection.
+\href{https://commons.wikimedia.org/wiki/File:A_portrait_of_Leonardo,_by_Francesco_Melzi.jpg}{Wikimedia Commons; public domain.}
+\end{minipage}
+\caption{Optics and pictorial perspective study a common geometry:
+how points in space correspond to points in an image.}
+\label{fig:geo-optics-portraits}
+\end{figure}
+
+Leonardo da Vinci studied light, vision, and perspective, and used linear
+perspective to organise painted space. In \emph{The Last Supper}, the
+receding architectural lines help create the impression that a flat wall
+opens into a room. In a perspective construction, one imagines straight
+lines from the scene to a fixed eye and marks where they cross a picture
+plane: the same geometric arrangement as our point-camera model.\footnote{See the
+\href{https://cenacolovinciano.org/en/story/a-powerful-theatrical-machine/}{Museo del Cenacolo Vinciano's discussion of perspective in \emph{The Last Supper}}.
+The use of linear perspective is distinct from evidence of tracing a
+particular painting with an optical device.}
+
+Later camera obscuras often used lenses to admit more light and mirrors
+to redirect the image, and became aids to drawing. A smartphone likewise
+uses lenses and a sensor, rather than a literal pinhole. Nevertheless,
+central projection remains a useful geometric model when lens distortion
+is negligible or corrected. The camera makes an image from a scene; our
+measurement problem uses known features of the scene to reason back from
+the image.
+
+\paragraph{The problem.}
+A single photograph shows two vertical objects standing on the same flat,
+horizontal ground. One has known height $h_0>0$; the other has unknown
+height $h>0$. Their tops and feet are visible. Four marked ground points
+are also visible, and their positions on a ground plane are known.
+Determine $h$ without measuring the camera's height. For this construction,
+assume that the camera is higher than both objects, that neither stands
+directly below it, and that their feet and the point below the camera are
+not collinear. We will explain why these assumptions are useful.
+
+\paragraph{What does an image point tell us?}
+A pixel identifies a viewing line through the camera centre, not a unique
+point in space. Every point on that line projects to the same image
+position. However, if we know that a point lies on the ground plane, the
+intersection of its viewing line with that plane locates it.
+
+For now, suppose a function $H$ performs this intersection calculation:
+\[
+H(x,y)=\text{the ground coordinates corresponding to image position }(x,y).
+\]
+We will construct $H$ from the four marked points later. It maps positions
+in the photograph to positions on a plan of the ground. It does not
+recover the height of an arbitrary object by itself.
+
+Let $C$ be the camera centre and $O$ its vertical projection onto the
+ground. Write $c=CO$ for the camera height. Let $T$ and $F$ be the top
+and foot of the unknown object, and let $t,f$ be their image positions. We avoid the image inversion problem by considering an equivalent virtual image plane  at the same distance in front of the camera, Convince yourself that the similar triangle relations hold.
+Then
+\[
+H(f)=F,\qquad H(t)=R.
+\]
+Here $R$ is where the line from $C$ through $T$, continued beyond $T$,
+meets the ground. \emph{Mapping the image of the top does not give the
+foot.} It gives a different point on the same viewing line. The assumption
+$c>h$ ensures that this line meets the ground beyond the object. However, convince yourself that this is not strictly required.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[scale=.88]
+\fill[blue!7] (-.3,2.5)--(4,3.2)--(9,-.4)--(4.7,-1.1)--cycle;
+\coordinate (C) at (8,6);\coordinate (O) at (8,0);
+\coordinate (F) at (3,1.5);\coordinate (T) at (3,3.5);
+\coordinate (R) at (.5,2.25);\coordinate (t) at (6.25,5.125);\coordinate (f) at (6.25,4.425);
+\draw[very thick,blue!65!black] (C)--node[right]{$c$}(O);
+\draw[very thick,red!70!black] (F)--node[left]{$h$}(T);
+\draw[thick,green!45!black] (R)--(O);
+\draw[fill=white,fill opacity=.7,draw=blue!65!black,thick] (5.7,4.1)--(6.8,4.6)--(6.8,5.65)--(5.7,5.15)--cycle;
+\draw[thick,magenta!75!black] (C)--(R) (C)--(F);
+\draw[very thick,red!70!black] (t)--(f);
+\foreach \p/\lab/\pos in {C/C/above,O/O/below right,F/F/below,T/T/above left,R/R/left,t/t/above left,f/f/below right}{\fill (\p) circle(1.7pt) node[\pos]{$\lab$};}
+\node[above,align=center] at (5.4,6.15) {virtual image\\plane};
+\draw[->] (5.6,5.8)--(5.9,5.2);
+\node at (5.1,-.65) {ground plane};
+\end{tikzpicture}
+\caption{A spatial view of the construction, redrawn from the supplied
+metrology sketch. The viewing lines through image points $t,f$ meet the
+ground at $R,F$. The camera centre $C$ is vertically above $O$.
+The image plane shown in front of $C$ is a convenient \emph{virtual}
+plane, not the physical sensor behind the opening.}
+\label{fig:geo-camera-spatial}
+\end{figure}
+
+For drawing purposes we may place an imaginary image plane in front of
+$C$, where it cuts the viewing lines before they reach the scene. This
+gives an upright image and simplifies the diagram. Moving to this virtual
+plane does not change the viewing lines or their ground intersections.
+The physical pinhole image in Figure~\ref{fig:geo-pinhole} is on the other
+side of $C$ and is inverted. Figure~\ref{fig:geo-camera-triangles} isolates
+the vertical cross-section that we need for the proof.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[scale=.85]
+\coordinate (O) at (0,0);\coordinate (C) at (0,4);
+\coordinate (F) at (4,0);\coordinate (T) at (4,2);\coordinate (R) at (8,0);
+\fill[blue!6] (O)--(C)--(R)--cycle;
+\draw[thick] (-.7,0)--(9,0) node[right]{ground};
+\draw[very thick,blue!65!black] (O)--node[left]{$c$}(C);
+\draw[very thick,blue!65!black] (F)--node[right]{$h$}(T);
+\draw[thick,orange!85!black] (C)--node[pos=.25,above=5pt,sloped]{viewing line}(R);
+\draw[dashed,gray] (C)--(F);
+\draw (0,.25)--(.25,.25)--(.25,0);
+\draw (4,.25)--(4.25,.25)--(4.25,0);
+\foreach \p/\lab/\pos in {O/O/below left,C/C/above,F/F/below,T/T/above right,R/R/below right}{\fill (\p) circle(2pt) node[\pos]{$\lab$};}
+\draw[<->] (4,-.65)--node[fill=white]{$FR$}(8,-.65);
+\draw[<->] (0,-1.2)--node[fill=white]{$OR$}(8,-1.2);
+\end{tikzpicture}
+\caption{A vertical cross-section through the camera and the object.
+The image of the foot maps to $F$; the image of the top maps to $R$.
+The right triangles $TFR$ and $COR$ are similar. The image plane is omitted
+so that the geometry of the measurement is visible.}
+\label{fig:geo-camera-triangles}
+\end{figure}
+
+The triangles $TFR$ and $COR$ share the angle at $R$ and each has a right
+angle. Consequently,
+\[
+\frac{h}{c}=\frac{FR}{OR},\qquad h=c\,\frac{FR}{OR}.
+\]
+The lengths on the right are distances on the ground plan, after applying
+$H$. Ratios of uncorrected pixel distances generally do not give the same answer.
+
+\paragraph{Finding the point below the camera.}
+For the reference object, write $F_0=H(f_0)$ and $R_0=H(t_0)$, using its
+foot and top image positions. The camera and each vertical object lie in
+a vertical plane. That plane meets the ground in a line through $O$.
+Thus $O,F,R$ are collinear, and so are $O,F_0,R_0$. Draw the two full lines:
+\[
+O=\operatorname{line}(F,R)\cap\operatorname{line}(F_0,R_0).
+\]
+This explains the noncollinearity assumption in the problem: the two
+lines must be distinct to determine their intersection. $O$ need not
+lie inside the photographed patch of ground.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[scale=.85]
+\coordinate (O) at (0,0);\coordinate (F) at (3,1);\coordinate (R) at (6,2);
+\coordinate (Fz) at (2,3);\coordinate (Rz) at (3,4.5);
+\draw[thick,blue!65!black] (-.6,-.2)--(6.6,2.2);
+\draw[thick,orange!85!black] (-.3,-.45)--(3.3,4.95);
+\foreach \p/\lab/\pos in {O/O/below left,F/F/below,R/R/below,Fz/F_0/left,Rz/R_0/left}{\fill (\p) circle(2pt) node[\pos]{$\lab$};}
+\node[right,align=left] at (4,3.8) {plan of the ground\\after applying $H$};
+\end{tikzpicture}
+\caption{Two vertical objects locate the point $O$ below the camera.
+Join each mapped foot to its mapped top and extend the lines to meet.
+These are ground-plane lines, not the vertical objects themselves.}
+\label{fig:geo-camera-plan}
+\end{figure}
+
+\paragraph{Eliminating the camera height.}
+The reference object gives another pair of similar triangles, so
+\[
+\frac{h_0}{c}=\frac{F_0R_0}{OR_0}.
+\]
+Dividing the equation for the unknown object by this equation eliminates
+$c$:
+\[
+\boxed{h=h_0\,\frac{FR/OR}{F_0R_0/OR_0}.}
+\]
+For example, if $FR/OR=0.6$, $F_0R_0/OR_0=0.4$, and $h_0=1$ metre,
+then $h=1.5$ metres. Multiplying every ground-plan length by the same
+scale factor changes neither ratio. Thus an absolute ground-distance scale
+is unnecessary once a reference height is supplied. Note, that if $H$ is known then no measurements on ground are necessary.
+
+\paragraph{Four points straighten the ground plane.}
+How do we obtain $H$? Imagine marking a rectangle on the ground and
+photographing it at an angle. Its image usually looks like a quadrilateral:
+parallel sides may appear to converge. Suppose we know which image corner
+corresponds to each corner of the rectangle. We seek a mapping that sends
+those four image positions back to their positions on the ground plan.
+The required mapping is a \emph{homography}, or plane perspective
+transformation. It preserves straight lines, but generally not lengths,
+angles, or parallelism.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[scale=.8]
+\begin{scope}
+\filldraw[fill=orange!12,thick] (0,0)--(4,0)--(3.2,2.6)--(1,2.3)--cycle;
+\node[below left] at (0,0) {$p_1$};\node[below right] at (4,0) {$p_2$};
+\node[above right] at (3.2,2.6) {$p_3$};\node[above left] at (1,2.3) {$p_4$};
+\node at (2,-.9) {photograph};
+\end{scope}
+\draw[very thick,->] (4.7,1.2)--node[above]{$H$}(6.1,1.2);
+\begin{scope}[xshift=7cm]
+\filldraw[fill=blue!10,thick] (0,0) rectangle (4,3);
+\node[below left] at (0,0) {$(0,0)$};\node[below right] at (4,0) {$(4,0)$};
+\node[above right] at (4,3) {$(4,3)$};\node[above left] at (0,3) {$(0,3)$};
+\node at (2,-.9) {ground plan};
+\end{scope}
+\end{tikzpicture}
+\caption{Four correspondences calibrate the mapping:
+$p_1\mapsto(0,0)$, $p_2\mapsto(4,0)$, $p_3\mapsto(4,3)$,
+$p_4\mapsto(0,3)$. The ground coordinates must describe the marked
+points; they cannot be assigned arbitrarily to four unrelated clicks.}
+\label{fig:geo-homography}
+\end{figure}
+
+Four pairs of corresponding points determine a homography, provided the
+points are distinct and no three are collinear in either plane. For our
+rectangle, measure its side lengths or their ratio and use coordinates
+such as $(0,0),(4,0),(4,3),(0,3)$. Click the four image corners in the
+matching order. A supplied computational procedure finds the mapping.
+It can then be evaluated at the top and foot image positions, including
+positions outside the calibration quadrilateral where the mapping is finite.
+The four points calibrate the ground mapping; the vertical objects supply
+the additional information needed to measure height.\footnote{The familiar
+perspective correction in a document-scanning application uses the same
+idea: map the photographed page corners to a rectangle. See
+\href{https://docs.opencv.org/4.0.0-alpha/d9/dab/tutorial_homography.html}{OpenCV's introduction to homography}.
+For the broader subject, see
+\href{https://visionbook.mit.edu/3d_scene_understanding_single_view.html}{\emph{Foundations of Computer Vision}, ``Single View Metrology.''}}
+
+\paragraph{An optional algebraic glimpse.}
+In suitable image coordinates, the mapping can be written
+\[
+H(x,y)=\left(
+\frac{a_1x+a_2y+a_3}{c_1x+c_2y+1},\quad
+\frac{b_1x+b_2y+b_3}{c_1x+c_2y+1}
+\right).
+\]
+There are eight coefficients. A correspondence $(x_i,y_i)\mapsto(X_i,Y_i)$
+gives two equations; for example,
+\[
+a_1x_i+a_2y_i+a_3=X_i(c_1x_i+c_2y_i+1),
+\]
+and similarly for $Y_i$. Since all four coordinates in a correspondence
+are known, these are linear equations in the unknown coefficients. Four
+pairs give eight equations. Under the stated conditions they determine
+the mapping. We can use this computation without developing its full
+algebra here. A zero denominator represents a viewing line parallel to
+the ground, for which no finite ground intersection exists.
+
+\paragraph{From the proof to a procedure.}
+First calibrate $H$ using the four ground correspondences. Click the top
+and foot of each object, and map those four positions with $H$. Intersect
+the two mapped top--foot lines to obtain $O$. Calculate the two distance
+ratios and multiply their quotient by the known height $h_0$. Every step
+has a purpose supplied by the geometric argument.
+
+\paragraph{What can go wrong?}
+All clicks and calibration points must refer to the same camera view.
+The model assumes a point camera with negligible or corrected lens
+distortion, a flat ground plane, and truly vertical objects. If the two
+ground lines nearly coincide, their intersection is poorly determined.
+If a top is near camera height, its viewing line is nearly parallel to
+the ground and its mapped position can be very far away: small clicking
+errors may then produce large height errors. More calibration points can
+help check a fitted mapping, but do not correct a wrong geometric model.
+These are the same questions about assumptions and uncertainty that arose
+when we measured shadows.
+
+\subsection{Across a river, without crossing it}
+\paragraph{The problem.}
+Determine the perpendicular distance $AT$ to a visible but inaccessible
+landmark $T$, using only constructions and length measurements on the
+accessible side of a straight baseline through $A$. Assume level terrain
+and unobstructed sight lines. Specify which accessible lengths suffice.
+
+Choose a landmark $T$ on the opposite bank and a point $A$ on our bank
+so that $AT$ is perpendicular to an accessible baseline. We want the
+length $AT$; it need not be the river's width everywhere.
+Choose $B$ along the baseline, and continue in the same direction to $C$
+with $AB=BC$. From $C$ walk along a perpendicular, away from the river,
+until a point $D$ is reached such that $D,B,T$ lie on one straight line.
+All walking and tape measurements take place on our side.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[scale=.85]
+\fill[cyan!10] (-1,.15) rectangle (7,2.4);
+\node[cyan!50!black] at (5.6,1.7) {river};
+\coordinate (A) at (0,0);\coordinate (B) at (3,0);\coordinate (C) at (6,0);
+\coordinate (T) at (0,2.7);\coordinate (D) at (6,-2.7);
+\draw[thick] (A)--(C)--(D);\draw[dashed,thick] (A)--(T);\draw[orange!80!black,thick] (T)--(D);
+\draw (0,.25)--(.25,.25)--(.25,0);\draw (5.75,0)--(5.75,-.25)--(6,-.25);
+\foreach \p/\pos in {A/left,B/above,C/right,T/above,D/below}{\fill (\p) circle(2pt);\node[\pos] at (\p){$\p$};}
+\node[below] at (1.5,0) {$d$};\node[above] at (4.5,0) {$d$};
+\node[left] at (0,1.3) {unknown};\node[right] at (6,-1.5) {measure this};
+\end{tikzpicture}
+\caption{The right triangles $TAB$ and $DCB$ are similar. Equal baseline segments make their corresponding heights equal.}
+\end{figure}
+
+The angles at $B$ are vertically opposite, and the angles at $A$ and $C$
+are right angles. Similarity therefore gives
+\[
+\frac{AT}{CD}=\frac{AB}{BC}=1.
+\]
+Thus measuring $CD$ determines $AT$. If equal baseline segments are
+inconvenient, the same proof gives $AT=CD\,(AB/BC)$.
+The construction assumes enough clear ground behind $C$ and a visible
+line of sight to $T$.\footnote{A useful geometric construction converts an
+inaccessible measurement into an accessible one. Its proof also explains
+which field conditions are essential: here, the two perpendiculars,
+the baseline ratio, and the alignment of $T,B,D$.}
+
+\section{Measuring the Earth: shadows, angles, and a long journey}
+\label{sec:geo-earth}
+Our shadow calculation treated the ground as flat and vertical sticks as
+parallel. Over a small region this is a useful approximation. Over a long
+north--south journey, however, the direction of the local vertical changes.
+On a spherical Earth, vertical sticks point along radii from the centre.
+That change of direction allows us to measure the size of the Earth without
+travelling all the way around it.
+
+In the third century BCE, Eratosthenes used observations associated with
+Alexandria and Syene, near present-day Aswan in Egypt, to estimate Earth's
+circumference. Before following the argument, we need a way to describe
+positions on a sphere.\footnote{Eratosthenes' own account is lost. The
+familiar Alexandria--Syene construction comes through later writers,
+including Cleomedes. We present its idealised geometry rather than a
+reconstruction of every historical observation. See
+\href{https://old.maa.org/press/periodicals/convergence/eratosthenes-and-the-mystery-of-the-stades-the-basic-problem}{the Mathematical Association of America's historical discussion}.}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=.60\textwidth]{images/eratosthenes-strozzi.jpg}
+\caption{\emph{Eratosthenes Teaching in Alexandria}, Bernardo Strozzi, 1635.
+Montreal Museum of Fine Arts. This much later painting is an imaginative
+representation, not a contemporary likeness.
+\href{https://commons.wikimedia.org/wiki/File:Eratosthenes_Teaching_in_Alexandria_(Bernardo_Strozzi,_Montreal).jpg}{Image source: Wikimedia Commons; public domain.}}
+\label{fig:geo-eratosthenes-portrait}
+\end{figure}
+
+\paragraph{The problem.}
+Assume Earth is a sphere and that two observation sites lie on the same
+meridian. Given their surface separation $d>0$ and the angle
+$0<\theta<180^\circ$ between their local verticals, determine Earth's
+great-circle circumference $C$. Explain how solar observations can supply
+$\theta$ and what ground measurement is still required.
+
+\subsection{Latitude and longitude: angles that locate a place}
+Imagine Earth as a sphere with centre $O$, turning about the line joining
+the North and South Poles. The plane through $O$ perpendicular to this
+axis cuts the sphere in the \emph{equator}. Its latitude is $0^\circ$.
+
+The \emph{latitude} of a point $P$ is the angle its radius $OP$ makes
+with the equatorial plane. We specify north or south: the North Pole has
+latitude $90^\circ$ N, the South Pole $90^\circ$ S. Points of equal latitude
+form circles called \emph{parallels}. Apart from the equator, these circles
+are smaller than a great circle, which is a circle whose centre is $O$.
+
+A \emph{meridian} is a semicircle running from the North Pole to the South
+Pole. Choose one as the \emph{prime meridian}. The \emph{longitude} of a
+point is the angle from that reference meridian to its own, measured east
+or west about Earth's rotation axis. We use $0^\circ$ to $180^\circ$ E or W;
+$180^\circ$ E and $180^\circ$ W describe the same meridian. At a pole all
+meridians meet, so longitude does not distinguish a position there.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[scale=.85]
+\begin{scope}
+\draw[thick] (0,0) circle(2);
+\draw[dashed] (0,-2.3)--(0,2.3);\draw[thick] (-2,0)--(2,0);
+\draw[very thick,blue!65!black] (0,0)--(35:2);
+\draw[->] (.65,0) arc(0:35:.65);\node at (18:1) {$\phi$};
+\fill (35:2) circle(2pt) node[above right]{$P$};
+\node[below left] at (0,0) {$O$};\node[above] at (0,2.3) {North Pole};
+\node[below] at (0,-2.3) {South Pole};\node[right] at (2,0) {equator};
+\node[align=center] at (0,-3.7) {Latitude $\phi$\\meridian cross-section};
+\end{scope}
+\begin{scope}[xshift=8cm]
+\draw[thick] (0,0) circle(2);
+\draw[thick] (0,0)--(0,2);\draw[very thick,orange!80!black] (0,0)--(40:2);
+\draw[->] (0,.7) arc(90:40:.7);\node at (65:1) {$\lambda$};
+\fill (0,0) circle(2pt);\node[below,align=center] at (0,-.1) {rotation\\axis};
+\node[above,align=center] at (0,2.1) {prime\\meridian};
+\node[right,align=left] at (40:2) {meridian\\through $P$};
+\node[align=center] at (0,-3.7) {Longitude $\lambda$\\angle between meridian planes};
+\end{scope}
+\end{tikzpicture}
+\caption{Two separate views define the two angles. Left: a slice through the poles and $P$. Right: a view along the rotation axis; each meridian plane is represented by a radial line. The chosen angular separation is illustrative.}
+\label{fig:geo-latlong}
+\end{figure}
+
+For example, $30^\circ$ N, $20^\circ$ E specifies a point north of the
+equator on the meridian $20^\circ$ east of the reference. These are angles,
+not distances in kilometres. A degree of longitude spans a smaller distance
+along a parallel near a pole than it does at the equator, because the
+parallel itself is smaller.\footnote{The modern reference for longitude
+is associated with Greenwich. Unlike the equator, this reference is a
+human choice, not a feature singled out by the rotation axis. Our latitude
+is defined for a sphere; precise surveying accounts for Earth's flattening.
+See NOAA's explanations of
+\href{https://oceanservice.noaa.gov/facts/latitude.html}{latitude} and
+\href{https://oceanservice.noaa.gov/facts/longitude.html}{longitude}.}
+
+If two places lie on the same meridian, their north--south surface
+separation is an arc of a great circle. The angle it subtends at the centre
+is the difference of their signed latitudes. Thus two points at $24^\circ$ N
+and $31^\circ$ N on the same meridian are separated by $7^\circ$ of arc.
+If their longitudes differ as well, latitude difference alone does not give
+the angle between their radii. This is why the north--south alignment
+matters in the following argument.
+
+\subsection{From a shadow angle to a central angle}
+The idealised account begins at \emph{local solar noon} on the northern
+summer solstice. Solar noon means the Sun's daily passage across the local
+meridian; it need not occur at 12 on a civil clock. At Syene the Sun was
+reported directly overhead: a vertical stick had no shadow. At Alexandria,
+farther north, a vertical stick did cast a shadow. The stick made an
+angle of about $7.2^\circ$ with the incoming sunlight.
+
+We make three geometric assumptions: Earth is spherical, sunlight reaches
+the two sites in parallel rays, and the sites lie on the same meridian.
+In this idealisation they share solar noon. The overhead ray at Syene
+lies along the local radius. Because the ray at Alexandria is parallel
+to it, the angle between that ray and Alexandria's vertical is equal to
+the angle between the two radii at Earth's centre.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[scale=.85]
+\coordinate (O) at (0,0);\coordinate (S) at (0,3);\coordinate (A) at (120:3);
+\draw[thick] (O) circle(3);
+\draw[blue!65!black,thick] (O)--(120:4.2);\draw[blue!65!black,thick] (O)--(0,4.2);
+\draw[orange!80!black,very thick,->] (0,5.1)--(S);
+\draw[orange!80!black,very thick,->] (-1.5,5.1)--(A);
+\draw[very thick,green!45!black] (90:3) arc(90:120:3);
+\draw (90:.7) arc(90:120:.7);\node at (105:1) {$\theta$};
+\draw (-1.5,3.148) arc(90:120:.55);\node at (-1.8,3.45) {$\theta$};
+\fill (O) circle(2pt) node[below right]{$O$};
+\fill (S) circle(2pt) node[right]{Syene};\fill (A) circle(2pt) node[left]{Alexandria};
+\node[right,align=left] at (1,4.6) {parallel rays\\from the Sun};
+\node[above right,green!35!black] at (105:3.12) {$d$};
+\node[right,align=left] at (3.6,.5) {$\theta=7.2^\circ$\\angle exaggerated};
+\end{tikzpicture}
+\caption{The shadow angle measures the turn between local verticals. The surface distance $d$ is the arc between the sites, not the straight chord through Earth. The circle is a meridian cross-section, not a map with north at the top.}
+\label{fig:geo-eratosthenes}
+\end{figure}
+
+The angle can be found from the right triangle formed by a vertical stick,
+its shadow, and a ray from the Sun. Measure the stick and the shadow,
+construct a similar triangle on paper, and read the angle between the
+stick and the ray with a protractor. We do not need trigonometry for this
+step. A report that the angle is one fiftieth of a full turn is equivalent
+to $360^\circ/50=7.2^\circ$.
+
+Let $d$ be the north--south surface distance between the sites and $C$
+Earth's circumference along a great circle. Arcs of a circle are
+proportional to their central angles, so
+\[
+\frac{d}{C}=\frac{\theta}{360^\circ},\qquad
+C=\frac{360^\circ}{\theta}\,d.
+\]
+For $\theta=7.2^\circ$, this gives $C=50d$. The traditional distance of
+$5000$ stadia therefore gives $250{,}000$ stadia for the circumference.
+For a modern classroom illustration, using $d\approx800$ kilometres gives
+$C\approx40{,}000$ kilometres. This rounded illustration is not an exact
+conversion of the ancient unit.\footnote{The length of the stadion used
+in this calculation is disputed, and ancient sources also report
+$252{,}000$ stadia for Eratosthenes' result. It is better to state the
+ancient result in its own units than attach a spurious exact percentage
+accuracy to it. See
+\href{https://mathshistory.st-andrews.ac.uk/Biographies/Eratosthenes/}{MacTutor's biography}
+and the MAA discussion cited above.}
+
+\subsection{Why did the measurement involve such a long journey?}
+The shadow gives an \emph{angle}, not a length. A small globe and a large
+globe can have the same angle between two radii. To determine which scale
+we are dealing with, we need one measured distance on the ground. The
+geometric argument removes the need to travel around the whole Earth;
+it does not remove the need for a distance between separated sites.
+
+Obtaining that distance in antiquity was a substantial surveying and travel
+task, whether done for this purpose or taken from existing geographical
+knowledge. A long trek could establish a baseline through measured stages
+or careful pacing. Simply counting the distance along a winding road or
+river would not suffice: the calculation needs the corresponding meridian
+arc, so detours must be allowed for. We should not turn this practical
+requirement into an unsupported claim that Eratosthenes personally walked
+from Alexandria to Syene.\footnote{Accounts of how the distance was
+obtained differ; the surviving evidence does not securely establish a
+particular journey or a newly commissioned walking survey. For the
+historical distance problem, see
+\href{https://old.maa.org/press/periodicals/convergence/eratosthenes-and-the-mystery-of-the-stades-distance-from-alexandria-to-syene}{``Distance from Alexandria to Syene,'' MAA}.
+The long trek explains the practical work behind a ground baseline, not
+an independently established episode in Eratosthenes' life.}
+
+There is a second reason to use widely separated sites: the signal becomes
+easier to measure. On a sphere of circumference $40{,}000$ kilometres,
+\[
+\theta=360^\circ\frac{d}{40{,}000}.
+\]
+A baseline of $1$ kilometre gives only $0.009^\circ$; $100$ kilometres
+gives $0.9^\circ$; $800$ kilometres gives $7.2^\circ$. A very short walk
+produces almost parallel local verticals and a tiny difference of shadow
+angles. A long baseline makes that difference more conspicuous.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+\draw[->] (0,0)--(10,0) node[right]{baseline $d$};
+\draw[very thick,blue!65!black] (0,.5)--(1,.5);
+\draw[very thick,blue!65!black] (0,1.1)--(8,1.1);
+\node[left] at (0,.5) {$100$ km};\node[right] at (1,.5) {$0.9^\circ$};
+\node[left] at (0,1.1) {$800$ km};\node[right] at (8,1.1) {$7.2^\circ$};
+\foreach \x/\lab in {0/0,2/200,4/400,6/600,8/800}{\draw (\x,.06)--(\x,-.06) node[below]{$\lab$};}
+\end{tikzpicture}
+\caption{On the same sphere, a longer north--south baseline produces a larger angular difference. Distances are drawn to scale; the angles are given as labels.}
+\end{figure}
+
+For example, suppose the angle can be read only within $0.1^\circ$ and
+ignore distance error for the moment. With $d=800$ kilometres and a reading
+of $7.2^\circ$, the possible circumference lies between
+\[
+\frac{360(800)}{7.3}\approx39{,}452
+\quad\text{and}\quad
+\frac{360(800)}{7.1}\approx40{,}563\text{ kilometres}.
+\]
+For $d=100$ kilometres and a reading of $0.9^\circ$, the same angular
+uncertainty gives a much wider interval: $36{,}000$ to $45{,}000$ kilometres.
+These are illustrative measurement bounds, not claims about the accuracy
+of ancient instruments. A longer baseline helps with a fixed angular
+error, but measuring that baseline introduces its own difficulties.
+
+\subsection{What the model tells us, and what it assumes}
+The cities are not exactly on the same meridian, and Syene was not exactly
+at the location where the solstice Sun would be overhead. Earth is also
+not a perfect sphere. These are limitations of the simplified account,
+not flaws in its geometric deduction. The achievement is the method:
+a terrestrial distance and an astronomical angle together determine a
+planetary length scale.
+
+Latitude makes the method especially transparent: along one meridian,
+the difference in latitude is the measured central angle. Longitude tells
+us why an east--west separation cannot be ignored. Places at different
+longitudes generally reach solar noon at different times. Merely reading
+two shadows at the same clock time need not reproduce the ideal experiment.
+
+We have moved from a flat local model to a spherical global one. Neither
+is useful at every scale. The earlier shadow calculation neglects the
+change in vertical over a small area; Eratosthenes' calculation deliberately
+makes that change large enough to measure.
+
+\section{Locating a point from distances}
+\label{sec:geo-location}
+\subsection{Coordinates turn a diagram into equations}
+Choose perpendicular axes and a common unit. A point $P=(x,y)$ records
+two signed displacements. By the Pythagorean theorem, the distance from
+$P=(x,y)$ to $A=(a,b)$ is
+\[
+PA=\sqrt{(x-a)^2+(y-b)^2}.
+\]
+A negative coordinate is a direction, not a negative length. Coordinates
+let us describe the same geometric relationships algebraically.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[scale=.8]
+\draw[->] (-.5,0)--(6,0) node[right]{$x$};\draw[->] (0,-.5)--(0,4.6) node[above]{$y$};
+\coordinate (A) at (1,1);\coordinate (P) at (5,4);\coordinate (R) at (5,1);
+\draw[thick,blue!65!black] (A)--node[above,sloped]{$PA$}(P);
+\draw[dashed] (A)--node[below]{$x-a$}(R)--node[right]{$y-b$}(P);
+\draw (4.75,1)--(4.75,1.25)--(5,1.25);
+\fill (A) circle(2pt) node[left]{$A=(a,b)$};\fill (P) circle(2pt) node[above]{$P=(x,y)$};
+\end{tikzpicture}
+\caption{For the configuration drawn, the horizontal and vertical lengths are $x-a$ and $y-b$. In general use their absolute values; squaring removes the signs.}
+\end{figure}
+
+\subsection{One circle, two circles, three measurements}
+Knowing that a point is five units from $A$ confines it to a circle;
+it does not tell us which point on that circle it is. A second distance
+usually leaves two possibilities. A third suitably placed landmark can
+distinguish them.
+
+\paragraph{The problem.}
+Given $A=(0,0)$ and $B=(6,0)$, find all points $P$ with $PA=PB=5$.
+Determine whether one additional exact distance from $C=(3,6)$
+distinguishes those points. All distances are Euclidean.
+
+If $P=(x,y)$ and $PA=PB=5$, then
+\[
+x^2+y^2=25,\qquad(x-6)^2+y^2=25.
+\]
+Subtracting the equations gives $12x-36=0$, so $x=3$. Substitution gives
+$y^2=16$, leaving $P=(3,4)$ or $P=(3,-4)$.
+A third landmark $C=(3,6)$ distinguishes them: their distances from $C$
+are $2$ and $10$, respectively.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[scale=.4]
+\draw[blue!65!black,thick] (0,0) circle(5);\draw[orange!80!black,thick] (6,0) circle(5);
+\draw[dashed] (3,-5.5)--(3,6.8);\draw[gray] (0,0)--(6,0);
+\foreach \x/\y/\lab/\pos in {0/0/A/below,6/0/B/below,3/4/P_+/right,3/-4/P_-/right,3/6/C/right}{\fill (\x,\y) circle(4pt) node[\pos]{$\lab$};}
+\draw[<->] (3,4)--node[left]{$2$}(3,6);
+\end{tikzpicture}
+\caption{Two distances leave a reflection ambiguity. A landmark off the baseline can distinguish the two points.}
+\end{figure}
+
+Two circles can also be tangent, disjoint, or coincident. With measured
+rather than exact distances, three circles may have no common point.
+This can indicate measurement error rather than a failure of geometry.
+Each uncertain distance is better represented by a thin ring; plausible
+locations lie in the overlap of the rings.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[scale=.65]
+\fill[blue!12,even odd rule] (0,0) circle(2.1) (0,0) circle(1.8);
+\fill[orange!20,even odd rule] (2.4,0) circle(2.1) (2.4,0) circle(1.8);
+\draw[blue!60!black] (0,0) circle(2.1) (0,0) circle(1.8);
+\draw[orange!70!black] (2.4,0) circle(2.1) (2.4,0) circle(1.8);
+\fill (0,0) circle(2pt) node[below]{$A$};\fill (2.4,0) circle(2pt) node[below]{$B$};
+\node[right,align=left] at (4.8,.9) {Each distance lies\\between two limits.};
+\draw[->] (4.7,.3)--(1.35,1.5);
+\end{tikzpicture}
+\caption{Uncertain measurements give regions of possible locations, often with more than one separate component.}
+\end{figure}
+
+\subsection{Which clinic is nearest?}
+\begin{figure}[htbp]\centering
+\includegraphics[height=1.4in]{images/voronoi.jpg}
+\caption{Georgy Voronoi (1868--1908), whose name is attached to these
+nearest-site regions. Photograph, photographer unknown;
+\href{https://commons.wikimedia.org/wiki/File:Georgy_Voronoy.jpg}{Wikimedia Commons, marked public domain}.}
+\label{fig:geo-voronoi-portrait}
+\end{figure}
+\paragraph{The problem.}
+Given finitely many distinct clinic locations in the Euclidean plane,
+describe, for each clinic, every point at least as close to it as to any
+other clinic. Include ties on shared boundaries. Assume straight-line
+travel is possible and all clinics are equally suitable.
+
+Suppose two clinics are at $A=(-2,0)$ and $B=(2,0)$. For $P=(x,y)$,
+\[
+PA^2-PB^2=(x+2)^2+y^2-\bigl((x-2)^2+y^2\bigr)=8x.
+\]
+Thus $P$ is nearer $A$ when $x<0$, nearer $B$ when $x>0$, and equally
+far from both when $x=0$. The boundary is the perpendicular bisector
+of $AB$. Translating or rotating the picture does not change the result.
+
+For several clinics, the region belonging to $A$ consists of all points
+at least as near to $A$ as to every other clinic. For each competitor,
+keep the half-plane containing $A$ bounded by their perpendicular bisector.
+The intersection of those half-planes is $A$'s \emph{Voronoi region}.\footnote{The regions are named after Georgy Voronoi (also written Voronoy, 1868--1908).
+For further examples and applications, see
+\href{https://en.wikipedia.org/wiki/Voronoi_diagram}{Wikipedia, ``Voronoi diagram.''}}
+Boundary points may belong to more than one region because of ties.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[scale=.8]
+\fill[blue!10] (-4,-2)--(0,-2)--(0,0)--(-4,4)--cycle;
+\fill[orange!15] (0,-2)--(4,-2)--(4,4)--(0,0)--cycle;
+\fill[green!12] (-4,4)--(0,0)--(4,4)--(4,4)--(-4,4)--cycle;
+\draw[thick] (-4,-2) rectangle (4,4);
+\draw[very thick] (0,-2)--(0,0)--(-4,4);\draw[very thick] (0,0)--(4,4);
+\foreach \x/\y/\lab in {-2/0/A,2/0/B,0/2/C}{\fill (\x,\y) circle(2.5pt) node[above right]{$\lab$};}
+\node at (-2,-1.3) {nearest $A$};\node at (2,-1.3) {nearest $B$};\node at (0,3.4) {nearest $C$};
+\end{tikzpicture}
+\caption{Three nearest-clinic regions, clipped to a rectangular map. Here $A=(-2,0)$, $B=(2,0)$, and $C=(0,2)$; the three boundaries meet at $(0,0)$.}
+\label{fig:geo-voronoi}
+\end{figure}
+
+A region is not necessarily bounded: a clinic near the edge of the set of
+sites can have a region extending indefinitely. The border of a printed
+map is not a nearest-distance boundary. Nor does ``nearest'' automatically
+mean ``best served'': travel time, capacity, and barriers may matter more.
+
+\subsection{Changing the meaning of distance}
+\paragraph{The problem.}
+Given two grid intersections $P=(x_P,y_P)$ and $Q=(x_Q,y_Q)$ with integer
+coordinates, determine the shortest route length using unit horizontal
+or vertical street segments. Every segment is available and has unit cost.
+
+On an ideal rectangular street grid, suppose we can move only horizontally
+and vertically and every street is available. The shortest route length is
+\[
+d_{\rm grid}(P,Q)=|x_P-x_Q|+|y_P-y_Q|.
+\]
+Every route must cover at least those horizontal and vertical displacements;
+a route that never reverses direction attains their sum. This proves the
+formula. Between $(0,0)$ and $(3,2)$ it gives $5$, whereas straight-line
+distance gives $\sqrt{13}$. The nearest-clinic boundaries can change when
+the distance model changes.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[scale=.8]
+\draw[step=1,gray!35] (0,0) grid (4,3);
+\draw[very thick,blue!65!black] (0,0)--(3,0)--(3,2);
+\draw[thick,dashed,orange!85!black] (0,0)--node[above,sloped]{$\sqrt{13}$}(3,2);
+\node[below left] at (0,0) {$P$};\node[above right] at (3,2) {$Q$};
+\node[below] at (1.5,0) {$3$};\node[right] at (3,1) {$2$};
+\end{tikzpicture}
+\caption{The straight route is shorter, but the street model does not permit it. A shortest admissible route has length $5$.}
+\end{figure}
+
+\section{Finding a shortest route}
+\label{sec:geo-shortest}
+\subsection{A route that must touch a straight boundary}
+\paragraph{The problem.}
+Let $A$ and $B$ lie strictly on the same side of a straight boundary $\ell$.
+We want a route from $A$ to $B$ that touches $\ell$, perhaps to collect
+water along a straight stretch of riverbank. Assuming open terrain and
+equal cost per unit length, choose $X$ on $\ell$ to minimise $AX+XB$.
+
+Reflect $B$ across $\ell$ to obtain $B'$. Every point $X$ of $\ell$
+satisfies $XB=XB'$, so
+\[
+AX+XB=AX+XB'\geq AB'.
+\]
+The inequality is the triangle inequality. Equality holds when $X$ is
+where the straight segment $AB'$ crosses $\ell$. Because $A$ and $B'$
+are on opposite sides, that intersection exists. The lower bound is
+attained, which proves that the constructed route is shortest.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[scale=.85]
+\coordinate (A) at (0,3);\coordinate (B) at (6,2);\coordinate (Bp) at (6,-2);\coordinate (X) at (3.6,0);\coordinate (Y) at (1.5,0);
+\draw[thick] (-.7,0)--(7,0) node[right]{$\ell$};
+\draw[gray,dashed] (B)--(Bp);\draw[gray] (A)--(Y)--(B);
+\draw[very thick,blue!65!black] (A)--(X)--(B);
+\draw[thick,dashed,orange!80!black] (X)--(Bp);
+\foreach \p/\lab/\pos in {A/A/above,B/B/above,Bp/B'/below,X/X/below left,Y/Y/below}{\fill (\p) circle(2pt) node[\pos]{$\lab$};}
+\end{tikzpicture}
+\caption{Reflect the destination. The best broken route becomes a straight segment; a different touching point $Y$ gives a longer route.}
+\end{figure}
+
+\paragraph{From the proof to a procedure.}
+Construct the perpendicular from $B$ to $\ell$ and extend it by the same
+length on the other side to obtain $B'$. Draw $AB'$ and mark its intersection
+$X$ with $\ell$. Follow $AX$ and then $XB$. The proof supplies both the
+construction and the certificate that no other touching point is better.
+
+For $A=(0,3)$, $B=(6,2)$, and $\ell$ the horizontal axis, $B'=(6,-2)$.
+The straight segment drops five units in six horizontal units, and reaches
+the axis after a drop of three, so $X=(18/5,0)$. The shortest length is
+$AB'=\sqrt{61}$. If only a finite stretch of bank is accessible, first
+check that $X$ belongs to it; the construction for an unrestricted line
+need not solve the constrained problem.
+
+\subsection{Unfolding a surface}
+A route drawn straight through a box is not a route along its surface.
+But unfolding adjacent flat faces preserves lengths within those faces.
+A shortest route crossing a specified shared edge can therefore be found
+by laying the faces flat and drawing a straight segment, provided that
+segment stays within the unfolded faces and crosses the intended edge.
+
+\paragraph{The problem.}
+For a rectangular box with edge lengths $a=4$, $b=3$, $c=2$ and opposite
+corners $P,Q$, compare the three two-face routes obtained by unfolding
+rectangles of dimensions $(a+b)\times c$, $(a+c)\times b$, and
+$(b+c)\times a$. Check that each straight segment stays on those faces,
+and find the shortest of these candidates. Lengths use a common unit.
+
+The three unfoldings give the candidate lengths
+\[
+\sqrt{(a+b)^2+c^2}=\sqrt{53},\quad
+\sqrt{(a+c)^2+b^2}=\sqrt{45},\quad
+\sqrt{(b+c)^2+a^2}=\sqrt{41}.
+\]
+These are lengths of admissible surface routes, not of the space diagonal.
+The third is the shortest of these candidates. Comparing candidates is a
+useful step, but a claim of global optimality also needs a proof that
+no other face sequence does better; we do not assume that merely from a drawing.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[scale=.52]
+\begin{scope}
+\fill[blue!10] (0,0) rectangle (4,2);\fill[orange!15] (4,0) rectangle (7,2);
+\draw[thick] (0,0) rectangle (7,2);\draw[dashed] (4,0)--(4,2);\draw[very thick,blue!65!black] (0,0)--(7,2);
+\node[below] at (2,0) {$a$};\node[below] at (5.5,0) {$b$};\node[left] at (0,1) {$c$};
+\node[above] at (3.5,2) {$\sqrt{53}$};
+\end{scope}
+\begin{scope}[xshift=10cm]
+\fill[blue!10] (0,0) rectangle (3,4);\fill[orange!15] (3,0) rectangle (5,4);
+\draw[thick] (0,0) rectangle (5,4);\draw[dashed] (3,0)--(3,4);\draw[very thick,blue!65!black] (0,0)--(5,4);
+\node[below] at (1.5,0) {$b$};\node[below] at (4,0) {$c$};\node[left] at (0,2) {$a$};\node[above] at (2.5,4) {$\sqrt{41}$};
+\end{scope}
+\end{tikzpicture}
+\caption{Two of the three candidate unfoldings. Dashed lines are folds, not barriers. The endpoints of each diagonal represent opposite corners of the box.}
+\end{figure}
+
+\paragraph{Try it with paper.}
+Make a $4\times3\times2$ box, mark opposite corners, and transfer the
+shorter route from its unfolding back onto the box. It will bend in space
+at the fold although it was straight on the paper. The relevant geometry
+is that of the permitted surface.
+
+\section{Shape, size, and efficiency}
+\label{sec:geo-efficiency}
+\subsection{The largest rectangular garden}
+\paragraph{The problem.}
+Suppose a rectangular garden has a fixed perimeter $P>0$, with all four
+sides fenced. If its side lengths are $x,y>0$, then $x+y=P/2$.
+We want to maximise its area $xy$.
+
+The identity
+\[
+(x+y)^2-(x-y)^2=4xy
+\]
+gives
+\[
+xy=\frac{P^2}{16}-\frac{(x-y)^2}{4}\leq\frac{P^2}{16}.
+\]
+Equality holds exactly when $x=y=P/4$. Thus the square has the greatest
+area \emph{among rectangles with that perimeter}. The restriction to
+rectangles is part of the claim. We have both an upper bound and a shape
+that attains it, just as the reflection argument gave a lower bound and
+a route attaining it.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[scale=.55]
+\filldraw[fill=blue!12] (0,0) rectangle (8,2);\node at (4,1) {$8\times2=16$};
+\filldraw[fill=blue!20] (10,0) rectangle (16,4);\node at (13,2) {$6\times4=24$};
+\begin{scope}[xshift=19cm]\filldraw[fill=blue!30] (0,0) rectangle (5,5);\node at (2.5,2.5) {$5\times5=25$};\end{scope}
+\end{tikzpicture}
+\caption{Each rectangle has perimeter $20$. Equalising the side lengths increases area.}
+\end{figure}
+
+\paragraph{A changed problem.}
+Now an existing straight wall can supply one entire side at no fencing
+cost. It is long enough for any proposed garden. With the same available
+fencing length $P$, determine the largest rectangular area and its dimensions.
+
+The constraint changes to $2x+y=P$, where
+$x$ measures distance away from the wall. Then
+\[
+xy=x(P-2x)=\frac{P^2}{8}-2\left(x-\frac P4\right)^2.
+\]
+The optimum now has $x=P/4$ and $y=P/2$: it is not a square.
+A correct answer belongs to a specified problem, not just to a familiar picture.
+
+\subsection{Enlarging a shape}
+\paragraph{The problem.}
+A plane figure or solid is enlarged uniformly by a factor $k>0$ in every
+linear dimension. Determine the factors by which its area or volume
+changes. For a solid, also determine the change in surface-area-to-volume ratio.
+
+If every length of a shape is multiplied by $k>0$, corresponding areas
+are multiplied by $k^2$ and volumes by $k^3$. For a rectangle this follows
+from $(kx)(ky)=k^2xy$; for a rectangular box it follows from
+$(kx)(ky)(kz)=k^3xyz$. Decomposing a polygon into triangles gives the
+same area rule, and the volume rule extends to similar solids.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[scale=.8]
+\draw[step=1,gray!50] (0,0) grid (1,1);\draw[very thick] (0,0) rectangle (1,1);\node[below,align=center] at (.5,0) {side $1$\\area $1$};
+\draw[step=1,gray!50] (3,0) grid (5,2);\draw[very thick] (3,0) rectangle (5,2);\node[below,align=center] at (4,0) {side $2$\\area $4$};
+\draw[step=1,gray!50] (7,0) grid (10,3);\draw[very thick] (7,0) rectangle (10,3);\node[below,align=center] at (8.5,0) {side $3$\\area $9$};
+\end{tikzpicture}
+\caption{Scaling every length by $k$ requires $k^2$ unit squares to cover the enlarged square when $k$ is an integer. The algebraic rule also holds for noninteger $k>0$.}
+\end{figure}
+
+Doubling a box's dimensions therefore requires four times as much surface
+material but gives eight times the capacity, if thickness is neglected.
+The surface-area-to-volume ratio is divided by two. These statements
+compare \emph{similar} boxes; changing only one dimension is a different
+operation.
+
+\subsection{Cutting a cube into pieces}
+\paragraph{The problem.}
+A cube of side $s>0$ is cut by planes parallel to its faces into equal
+cubes, with $m\geq1$ divisions along each edge. Neglect the thickness of
+cuts. Determine the number of pieces, their total volume and total surface
+area, and the newly exposed area when all pieces are separated.
+
+Take a cube of side $s$, and divide each edge into $m$ equal parts, where
+$m\geq1$ is an integer. There are $m^3$ small cubes, each of side $s/m$.
+Their combined volume is
+\[
+m^3(s/m)^3=s^3,
+\]
+but the sum of all their surface areas is
+\[
+m^3\,6(s/m)^2=6ms^2.
+\]
+That is $m$ times the surface area of the original cube. The extra area
+comes from newly exposed cut faces, not from extra volume. If the pieces
+remain pressed together, those internal faces are not exposed to the surroundings.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[x={(1cm,0cm)},y={(.45cm,.3cm)},z={(0cm,1cm)},scale=.85]
+\draw[thick,fill=blue!8] (0,0,0)--(2,0,0)--(2,0,2)--(0,0,2)--cycle;
+\draw[thick,fill=blue!15] (2,0,0)--(2,2,0)--(2,2,2)--(2,0,2)--cycle;
+\draw[thick,fill=blue!25] (0,0,2)--(2,0,2)--(2,2,2)--(0,2,2)--cycle;
+\node at (1,0,-.5) {one cube};
+\begin{scope}[xshift=6cm]
+\foreach \a in {0,1}{\foreach \b in {0,1}{\foreach \c in {0,1}{
+\begin{scope}[shift={(1.3*\a,1.3*\b,1.3*\c)}]
+\draw[fill=blue!8] (0,0,0)--(1,0,0)--(1,0,1)--(0,0,1)--cycle;
+\draw[fill=blue!15] (1,0,0)--(1,1,0)--(1,1,1)--(1,0,1)--cycle;
+\draw[fill=blue!25] (0,0,1)--(1,0,1)--(1,1,1)--(0,1,1)--cycle;
+\end{scope}}}}
+\node at (1,0,-.5) {eight pieces};
+\end{scope}
+\end{tikzpicture}
+\caption{For $m=2$, volume is unchanged but the total surface area of the separated pieces doubles. The gaps illustrate separation and are not part of the original cube.}
+\end{figure}
+
+This helps explain why crushing or cutting a material can make surface
+processes faster. Geometry identifies the changed area; a prediction of
+the actual rate also needs a model of the physical process.
+
+\subsection{Packaging: state what is being optimised}
+\paragraph{The problem.}
+Among all closed boxes with a square base and prescribed volume $V>0$,
+find dimensions that minimise total surface area, and prove the minimum.
+The dimensions may be any positive real numbers; ignore material thickness,
+seams, and waste in cutting.
+
+Consider a closed box with square base of side $x$ and height $h$,
+required to contain $V$ cubic units. Ignoring thickness and seams,
+\[
+x^2h=V,\qquad S=2x^2+4xh=2x^2+\frac{4V}{x}.
+\]
+For $V=1000$, the boxes $(x,h)=(5,40),(10,10),(20,2.5)$ have surface
+areas $850,600,1000$, respectively. A table suggests a good design, but
+three trials do not prove optimality.
+
+Here a proof is possible without calculus. Put $s=\sqrt[3]{V}$ and
+$t=x/s>0$. Then
+\[
+\frac{S}{2s^2}-3=t^2+\frac2t-3
+=\frac{(t-1)^2(t+2)}t\geq0.
+\]
+Thus $S\geq6V^{2/3}$, with equality exactly at $t=1$: the cube is best
+within this family of closed boxes. An open box has only one base, and
+extra conditions such as shelf height, openings, seams, or strength change
+the problem. The model tells us what our optimisation does and does not establish.
+
+\section{A bridge back to algorithms: area from vertices}
+\label{sec:geo-polygon}
+\paragraph{The problem.}
+Given the coordinates of the $n\geq3$ vertices of a simple polygon in
+boundary order, compute its area. Give a procedure whose arithmetic-operation
+count grows linearly with $n$. The input boundary does not cross itself;
+clockwise and anticlockwise orders must both be accepted.
+
+A survey may give the vertices of a field rather than its area. Suppose
+$P_i=(x_i,y_i)$, $i=1,\ldots,n$, list the vertices of a simple polygon
+in order around its boundary. ``Simple'' means that its edges do not cross.
+Set $P_{n+1}=P_1$. Its area is
+\[
+A=\frac12\left|\sum_{i=1}^{n}
+(x_i y_{i+1}-x_{i+1}y_i)\right|.
+\]
+This is the \emph{shoelace formula}. The order of the vertices is essential;
+sorting them arbitrarily by one coordinate can describe a different boundary.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[scale=.7]
+\coordinate (O) at (0,0);\coordinate (A) at (1,1);\coordinate (B) at (5,1);\coordinate (C) at (4,4);\coordinate (D) at (1,3);
+\fill[blue!12] (A)--(B)--(C)--(D)--cycle;
+\draw[thick] (A)--(B)--(C)--(D)--cycle;
+\draw[dashed,gray] (O)--(A) (O)--(B) (O)--(C) (O)--(D);
+\foreach \p/\lab/\pos in {O/O/below left,A/P_1/left,B/P_2/right,C/P_3/above,D/P_4/left}{\fill (\p) circle(2pt) node[\pos]{$\lab$};}
+\node[right,align=left] at (6,2) {Signed triangle areas\\cancel outside the polygon.};
+\end{tikzpicture}
+\caption{Summing oriented triangles from an origin gives the polygon area, even when that origin is outside.}
+\end{figure}
+
+Why does this work? The signed area of the triangle $OP_iP_{i+1}$ is
+$\tfrac12(x_i y_{i+1}-x_{i+1}y_i)$, positive for an anticlockwise turn
+and negative for a clockwise turn. The formula follows by subtracting
+right-triangle areas, or by taking base times perpendicular height.
+Triangulate the polygon, and orient each triangle anticlockwise. In the
+sum of their coordinate expressions, every internal edge occurs in both
+directions and cancels. Only the boundary terms remain. Reversing the
+boundary order changes the sign; the absolute value recovers ordinary area.
+
+For $(0,0),(4,0),(4,3),(0,3)$ the sum is $24$, giving area $12$.
+For the quadrilateral in the figure the sum is $18$, giving area $9$.
+A self-crossing boundary needs separate interpretation: signed regions
+can cancel, so the formula need not give the total area one intended.
+
+The desired loop postcondition is that an accumulator $z$ contains all
+$n$ terms. Generalise ``all'' to ``the first $k$'':
+\[
+0\leq k\leq n,\qquad
+z=\sum_{i=1}^{k}(x_i y_{i+1}-x_{i+1}y_i).
+\]
+Begin with $k=0,z=0$. While $k<n$, add the term with index $k+1$ to $z$,
+then increment $k$. The displayed assertion is preserved, and the bound
+function $n-k$ decreases by one. Return $|z|/2$. This connects a geometric
+proof directly to an iterative procedure requiring $O(n)$ arithmetic operations.
+
+\section{What a geometric answer should contain}
+We have repeatedly followed the same route: state the question, draw a
+model, identify assumptions, prove a relationship, and turn it into a
+calculation or construction. Finally, interpret the result in the original
+setting. A number without units, a diagram without justified relationships,
+or an optimum without a specified constraint is only part of an answer.
+
+Geometry also gives us ways to check our work. Does the formula have the
+right units? Does it behave sensibly when a length doubles? Does an equality
+case attain the bound? Does the constructed route stay in the permitted
+region? These questions connect visual understanding to mathematical proof.
+
+\section*{Problems}
+Unless stated otherwise, coordinates refer to a Euclidean plane with a
+common unit on both axes. Draw labelled diagrams where helpful. For
+measurement problems, distinguish the conclusion within the stated model
+from possible errors in the model itself.
+\begin{enumerate}
+\setlength{\itemsep}{0pt}
+\setlength{\parsep}{0pt}
+\item \textbf{Height from shadows.} A vertical stick of height $1.2$ metres
+casts a shadow of length $0.8$ metres, while a vertical tree casts a shadow
+of length $7$ metres at the same instant. Assume level ground and parallel
+sunlight. Estimate the tree's height using similarity, and identify two
+physical departures from the assumptions that would invalidate the estimate.
+
+\item \textbf{Bounds on the height.} In the preceding shadow model, take
+the stick height to be exactly $1.2$ metres, its shadow length to lie in
+$[0.75,0.85]$ metres, and the tree's shadow length in $[6.8,7.2]$ metres.
+Find the smallest interval containing every tree height allowed by these
+bounds, with no further relationship assumed between the measurement errors.
+Give exact endpoints and an outward-rounded interval to two decimal places.
+
+\item \textbf{An unequal-baseline river construction.} Points $A,B,C$
+lie in that order on a straight baseline, with $AB=12$ and $BC=8$ metres.
+The segments $AT$ and $CD$ are perpendicular to the baseline on opposite
+sides, $T,B,D$ are collinear, and $CD=10$ metres. Determine $AT$ by
+similarity. Derive the general relation between $AT,AB,BC,CD$ and explain
+what simplifies when $AB=BC$.
+
+\item \textbf{Design a field measurement.} Choose one inaccessible height
+or distance on campus, and define precisely its endpoints. Propose a
+procedure using a tape, a vertical stick, and sight lines (you need not
+perform it). Supply a labelled diagram, a list of accessible measurements,
+the assumptions and formula used to infer the desired length, and one
+repeat measurement that would help detect an error. Explain what that
+repeat measurement checks.
+
+\item \textbf{Locating a point.} Let $A=(0,0)$ and
+$B=(8,0)$. Find all points $P$ satisfying $PA=PB=5$. Give coordinates for a third landmark whose distance to $P$
+distinguishes the possible points, and for a different landmark whose
+distance does not. Compute the relevant distances to justify both choices.
+
+\item \textbf{How many circle intersections?} Two circles have radii
+$r_1,r_2>0$ and distinct centres at distance $d>0$. Give necessary and
+sufficient conditions, in terms of $r_1,r_2,d$, for zero, one, and two
+intersection points. Distinguish external tangency from internal tangency,
+and disjoint circles lying outside one another from one lying inside the other.
+Illustrate each case.
+
+\item \textbf{Three Voronoi regions.} The only sites are $A=(0,0)$,
+$B=(6,0)$, and $C=(0,6)$. For each site, derive inequalities defining the
+points at least as close to it as to both others. Draw all three regions
+in the whole plane, mark the parts of the bisectors where nearest-site ties
+occur, and identify the point tied among all three sites.
+
+\item \textbf{Straight-line distance versus road distance.} Construct a
+connected road network containing a home $H$ and two clinics $A,B$, with
+$HA<HB$ in Euclidean distance but with the shortest road route from $H$
+to $A$ longer than that from $H$ to $B$. Give coordinates for every junction,
+list all roads and their lengths, and calculate both shortest road distances.
+Use straight road segments with lengths given by their coordinates; travel
+is allowed only along the listed roads.
+
+\item \textbf{Counting shortest grid routes.} In the unobstructed integer
+square grid, every horizontal or vertical edge has length one and may be
+traversed in either direction. Find the shortest length from $(0,0)$ to
+$(3,2)$ and count all routes attaining it. Explain why no shortest route
+can include a westward or southward step.
+
+\item \textbf{A route touching a boundary.} Let $A=(0,2)$ and $B=(8,4)$.
+Among all broken straight routes $A\!\to X\!\to B$ with $X=(t,0)$,
+$t\in\mathbb R$, find the minimising point $X$ and the minimum length.
+Prove optimality by reflection. Repeat with the additional constraint
+$0\leq t\leq1$, giving a proof that your constrained minimiser is best.
+
+\item \textbf{Equal angles at the boundary.} Let $A,B$ lie strictly on
+the same side of a line $\ell$, and let $X\in\ell$ minimise $AX+XB$.
+Prove that the smaller angle between $AX$ and $\ell$ equals the smaller
+angle between $BX$ and $\ell$. Include the case in which both segments
+are perpendicular to $\ell$, and identify where reflection is used.
+
+\item \textbf{Routes on a box.} A rectangular box has edge lengths
+$5,4,1$ units. Join opposite corners by the three two-face routes obtained
+from unfolded rectangles $(5+4)\times1$, $(5+1)\times4$, and
+$(4+1)\times5$. Draw each unfolding with its fold and endpoints, find the
+three lengths, and identify the smallest. Check that each diagonal crosses
+the intended shared edge within that edge. Compare only these candidates;
+a proof about all possible face sequences is not required.
+
+\item \textbf{Fencing a garden.} Exactly $40$ metres of fencing is
+available for a rectangular garden with positive side lengths. Find the
+maximum area and the dimensions attaining it (a) when all four sides must
+be fenced and (b) when an existing straight wall supplies one side. In (b)
+assume the wall is long enough and the remaining three sides use all the
+fencing. Prove both maxima algebraically.
+
+\item \textbf{A scale model.} A model building is geometrically similar
+to the actual building, with every model length equal to $1/50$ of the
+corresponding actual length. Find the ratios model:actual for corresponding
+areas and volumes. If $A$ square centimetres of model surface requires
+painting, express the corresponding actual area in square centimetres and
+explain why multiplying $A$ by $50$ is incorrect.
+
+\item \textbf{Cutting a cube.} A solid cube of side $12$ cm is cut into
+cubes of side $3$ cm by planes parallel to its faces. Neglect material lost
+in cutting. Find the number of pieces, their combined volume, and the sum
+of their surface areas. After every piece is separated, how much exposed
+area is additional to the original cube's surface area? Include units.
+
+\item \textbf{A closed box.} A closed box has a square base of side
+$x>0$ cm, height $h>0$ cm, and volume $216$ cubic centimetres. Neglect
+thickness and seams. Find the least possible total surface area, prove
+that no admissible box has a smaller area, and identify all dimensions
+attaining the minimum. Do not use calculus.
+
+\item \textbf{An open box.} An open-top box has a square base of side
+$x>0$ and prescribed volume $V>0$. Its height is $h=V/x^2$ and its
+material area is $S=x^2+4V/x$. Prove without calculus that the unique
+minimum occurs at $x^3=2V$, give the minimum area in terms of $V$, and
+show that the optimal height is $x/2$. You may adapt the nonnegative
+factorisation used for the closed box.
+
+\item \textbf{Area from coordinates.} A polygon has vertices
+$(0,0),(5,0),(5,2),(2,4),(0,2)$ in the listed boundary order, with the last
+vertex joined to the first. Calculate its area using the shoelace formula.
+Verify it independently by decomposing the polygon into a rectangle and
+a triangle. Give the area in square coordinate units.
+
+\item \textbf{Translation and the shoelace sum.} Let
+$P_i=(x_i,y_i)$, $1\leq i\leq n$, be a closed polygonal sequence with
+$P_{n+1}=P_1$. For fixed real numbers $a,b$, replace every vertex by
+$(x_i+a,y_i+b)$. Prove that the signed sum
+$\sum_{i=1}^n(x_i y_{i+1}-x_{i+1}y_i)$ is unchanged by expanding the
+translated sum and cancelling terms. Deduce area invariance for a simple polygon.
+
+\item \textbf{A crossed boundary.} Join $(0,0),(2,2),(0,2),(2,0)$ in
+that order and close the boundary. Draw the resulting crossed figure.
+Compute both the signed shoelace sum and half its absolute value. Separately
+find the sum of the ordinary areas of its two triangular lobes. Explain
+why these results differ and which hypothesis of the polygon-area formula fails.
+
+\item \textbf{Earth's circumference from latitude.} Model Earth as a
+sphere. Two sites on the same meridian have latitudes $18^\circ$ N and
+$25.5^\circ$ N, and their meridian arc separation is $825$ km. Estimate
+the great-circle circumference. If the sites have different longitudes,
+explain why their latitude difference cannot simply be substituted for
+the angle between their radii in the same calculation.
+
+\item \textbf{An angle does not fix a size.} Fix an angle
+$0<\theta<180^\circ$. Draw two circles of different radii, each with two
+radii enclosing $\theta$. Explain why the same shadow-angle observation
+could be consistent with either sphere. Identify one additional length
+measurement that would determine the circumference and give the formula.
+
+\item \textbf{Uncertainty in Earth's circumference.} In a spherical
+model, two sites on one meridian have separation $d\in[595,605]$ km and
+central angle $\theta\in[5.3^\circ,5.5^\circ]$. Assume no further relation
+between these uncertainties. Find the smallest interval containing every
+value of $C=360^\circ d/\theta$ consistent with the bounds. State which
+endpoints determine each extreme and give an outward-rounded interval in
+whole kilometres.
+
+\item \textbf{Choosing a baseline.} Assume a spherical Earth of
+circumference $40{,}000$ km. Compare meridian baselines of $100$ km and
+$800$ km. Calculate their true central angles. For each, suppose the
+reported angle equals that true angle but has uncertainty $\pm0.1^\circ$;
+treat the distance as exact. Calculate the resulting circumference bounds
+and compare their widths. Explain why a longer baseline helps here, and
+why a winding road's length cannot replace the meridian arc length.
+
+\item \textbf{Latitude is not longitude.} On a sphere, let $P$ have
+coordinates $20^\circ$ N, $30^\circ$ E and $Q$ have coordinates
+$20^\circ$ N, $60^\circ$ E. State their common coordinate and longitude
+difference. Using a diagram, explain why that longitude difference is an
+angle about the rotation axis, whereas $\angle POQ$ is measured at the
+sphere's centre $O$ between the two radii; they are not equal here.
+Explain why their common parallel is not a great circle, while a full
+circle through a meridian is. No trigonometric calculation is required.
+
+\item \textbf{Height from a photograph.} In the construction of
+Section~\ref{sec:geo-camera}, the mapped points are
+$F=(4,0)$, $R=(10,0)$, $F_0=(0,3)$, and $R_0=(0,5)$.
+The reference object has height $h_0=1$ metre. Locate $O$, calculate both
+ground-distance ratios, and determine the unknown height $h$. Infer the
+camera height as a check, and verify the assumption that it exceeds both
+object heights. The ground coordinates use one common, arbitrary unit.
+
+\item \textbf{What the photograph does not tell us.} Assume the
+point-camera model and horizontal ground. Explain why $H(t)$, for the
+image $t$ of an object's top, is generally not its foot. Draw a vertical
+cross-section for an object whose height equals the camera height and
+explain why $H(t)$ then has no finite value. Finally, explain why the two
+mapped top--foot lines cannot locate $O$ uniquely when both objects and
+$O$ lie on one ground line.
+
+\item \textbf{Calibrating and checking the mapping.} A marked rectangle
+on the ground has side lengths in the ratio $4:3$. Its four photographed
+corners $p_1,p_2,p_3,p_4$ are given in cyclic order, with $p_1p_2$
+corresponding to the longer side. State the four correspondences that
+map it to a ground rectangle with corners $(0,0),(4,0),(4,3),(0,3)$.
+Explain why the rectangle's absolute size is unnecessary for the
+height-ratio formula. If a fifth marked point is known to be the centre
+of the rectangle, describe how its image can check the computed $H$.
+Must that image be the arithmetic mean of the four image-corner
+coordinates? Explain using the distinction between perspective and
+ordinary averaging.
+\end{enumerate}
