@@ -417,13 +417,18 @@ an average of two long waits among 20 independent visits, not exactly two
 in every sample. It is useful for counts and proportions; we will meet
 it again when counting wins in Section~\ref{sec:ds-inference}.
 
-When sampling independently and uniformly from a finite population,
-sampling \emph{with replacement} keeps the probability $p$ unchanged
-at every draw and gives a binomial count. Sampling \emph{without
-replacement} makes the draws dependent: the exact count then follows
-a \emph{hypergeometric distribution}. If the sample is a small fraction
-of the population, the binomial distribution can still provide a useful
-approximation.
+Figure~\ref{fig:ds-bernoulli-binomial} compares the outcome of a single
+trial with the count over 20 independent trials. In both panels, the bar
+heights are probabilities; their sum is one.
+
+\begin{figure}[p]\centering
+\includegraphics[width=0.88\textwidth]{figures/bernoulli.pdf}\\[5pt]
+\includegraphics[width=0.88\textwidth]{figures/binomial.pdf}
+\caption{Bernoulli and binomial distributions with $p=0.1$. The first
+models one yes-or-no outcome; the second counts yes outcomes in 20
+independent trials with the same probability.}
+\label{fig:ds-bernoulli-binomial}
+\end{figure}
 
 \paragraph{Poisson: arrivals in a fixed interval.}
 A \emph{Poisson distribution} models a count $K$ with
@@ -460,6 +465,114 @@ approximations in estimation, including the factor $1.96$ in
 Section~\ref{sec:ds-estimation}: a normal distribution places 95\% of its
 probability within $1.96$ standard deviations of its mean. The approximation
 may require large samples, especially for highly skewed observations.
+
+Figure~\ref{fig:ds-poisson-gaussian} contrasts an event count with a
+continuous measurement. The Poisson plot shows probability at each integer;
+the Gaussian plot shows a density, whose shaded area is approximately
+$0.95$. Its parameters here are $\mu=0$ and $\sigma=1$: this is the
+\emph{standard normal distribution}.
+
+\begin{figure}[p]\centering
+\includegraphics[width=0.88\textwidth]{figures/poisson.pdf}\\[5pt]
+\includegraphics[width=0.88\textwidth]{figures/gaussian.pdf}
+\caption{A Poisson distribution with expected count four, and the standard
+normal distribution. The Poisson distribution has a small tail beyond the
+displayed counts. In the Gaussian panel, the area between $-1.96$ and
+$1.96$ is approximately 95\% of the total area.}
+\label{fig:ds-poisson-gaussian}
+\end{figure}
+
+\subsection{Sampling from a specified distribution}
+\label{sec:ds-sampling-algorithm}
+\paragraph{The problem.}
+Given distinct values $x_1,\ldots,x_m$ and probabilities
+$p_1,\ldots,p_m$, how can we generate an observation that equals $x_i$
+with probability $p_i$? Here the distribution is specified in advance:
+we are generating data from a model, rather than collecting observations
+from a population.
+
+Assume we can draw a number $u$ uniformly from $[0,1)$. Partition this
+interval into consecutive pieces of lengths $p_1,\ldots,p_m$, and return
+the value assigned to the piece containing $u$. For our waiting-time model:
+\begin{center}
+\begin{tabular}{rrl}
+\toprule
+Wait (minutes) & Probability & Assigned interval\\
+\midrule
+0 & 0.1 & $[0,0.1)$\\
+5 & 0.4 & $[0.1,0.5)$\\
+10 & 0.4 & $[0.5,0.9)$\\
+20 & 0.1 & $[0.9,1)$\\
+\bottomrule
+\end{tabular}
+\end{center}
+Thus $u=0.73$ produces a waiting time of ten minutes. The half-open
+intervals ensure that a boundary point belongs to exactly one piece.
+
+\paragraph{From the post-condition to the invariant.}
+Define the cumulative probabilities
+\[
+ C_0=0,\qquad C_i=\sum_{j=1}^{i}p_j.
+\]
+The desired final assertion is $C_{i-1}\leq u<C_i$: we have found the
+interval containing $u$. Following the method in
+\QRMTprevious{sec:imperative-invariants}{Section}{the discussion of loop
+invariants in the imperative computation chapter}, generalise this assertion
+by keeping its lower inequality while allowing the upper one to remain
+unsatisfied. Search from left to right, storing the current upper endpoint
+$C_i$ in a variable $c$. Our invariant is
+\[
+ 1\leq i\leq m,\qquad c=C_i,\qquad C_{i-1}\leq u<1.
+\]
+We need not store all the cumulative probabilities: $c$ is updated as the
+search proceeds. The bound function is the nonnegative integer $m-i$.
+
+\begin{quote}
+\begin{minipage}{\linewidth}
+\textbf{Procedure: Sample from a finite distribution}\\[4pt]
+\textit{// Pre-condition: $m\geq1$; the $x_i$ are distinct;}\\
+\textit{// each $p_i\geq0$ and $\sum_{i=1}^{m}p_i=1$.}\\[3pt]
+Draw $u$ uniformly from $[0,1)$.\\
+Set $i\leftarrow1$ and $c\leftarrow p_1$.\\[3pt]
+\textit{// Invariant: $1\leq i\leq m$, $c=C_i$, $C_{i-1}\leq u<1$.}\\
+\textit{// Bound function: $m-i$.}\\[3pt]
+While $u\geq c$:\\
+\hspace*{1em}Set $i\leftarrow i+1$.\\
+\hspace*{1em}Set $c\leftarrow c+p_i$.\\[3pt]
+\textit{// Post-condition: $C_{i-1}\leq u<C_i$.}\\
+Return $x_i$.
+\end{minipage}
+\end{quote}
+
+\paragraph{Correctness and termination.}
+Initially, $i=1$, $c=C_1$, and $C_0=0\leq u<1$, so the invariant holds.
+Suppose it holds at index $i$ and the loop condition is true. Then
+$u\geq c=C_i$: the old upper endpoint can become the new lower endpoint.
+Increasing the index and adding $p_{i+1}$ to the old value of $c$ makes
+the new value $C_{i+1}$, preserving the invariant. This step is safe:
+if $i=m$, then $c=C_m=1>u$, so the loop condition cannot be true.
+
+Every iteration decreases $m-i$ by one, while it remains nonnegative.
+The loop therefore terminates. At exit, its condition is false, giving
+$u<C_i$. Combined with the invariant, this establishes the post-condition.
+Zero-probability values have empty intervals and are simply skipped.
+
+\paragraph{Why the output has the right probabilities.}
+The loop proof establishes that we find the correct interval. A separate
+probability argument establishes the distribution of the output. Since
+$u$ is uniform,
+\[
+ P(\text{return }x_i)
+ =P(C_{i-1}\leq u<C_i)=C_i-C_{i-1}=p_i.
+\]
+Independent repetitions using fresh independent uniform draws generate
+independent observations from the specified model. This is one way to
+produce the simulated samples used later in Figure~\ref{fig:ds-sampling}.
+The search uses $O(m)$ steps and a constant number of additional
+variables.\footnote{This mathematical description assumes exact arithmetic
+and an available uniform random-number generator. Finite-precision
+arithmetic and practical random-number generation require additional care
+in an implementation.}
 
 \section{Sampling: learning about more than we observe}
 \label{sec:ds-sampling}
